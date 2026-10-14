@@ -9,10 +9,11 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_PREFIX: ghcr.io/${{ github.repository_owner }}/fa1
+  IMAGE_PREFIX: ghcr.io/${{ github.repository_owner }}/fa2
 
 permissions:
   contents: read
@@ -24,7 +25,7 @@ permissions:
 jobs:
   test:
     name: "Build & Test"
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -63,7 +64,7 @@ jobs:
   # ---------------------------------------------------------------------------
   docker-publish:
     name: "Docker Build & Publish to GHCR"
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: test
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
@@ -79,8 +80,7 @@ jobs:
 
       - name: Extract Git SHA (short)
         id: vars
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $env:GITHUB_OUTPUT
-        shell: pwsh
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Build backend Docker image
         run: |
@@ -129,12 +129,12 @@ jobs:
 
       - name: Update backend image tag in deployment
         run: |
-          (Get-Content k8s/backend-deployment.yaml) -replace 'image: ghcr.io/vijay-dhame/fa1-backend:latest', "image: ${{ env.IMAGE_PREFIX }}-backend:${{ steps.vars.outputs.sha_short }}" | kubectl apply -f -
+          (Get-Content k8s/backend-deployment.yaml) -replace 'image: ghcr.io/vijay-dhame/fa2-backend:latest', "image: ${{ env.IMAGE_PREFIX }}-backend:${{ steps.vars.outputs.sha_short }}" | kubectl apply -f -
         shell: pwsh
 
       - name: Update frontend image tag in deployment
         run: |
-          (Get-Content k8s/frontend-deployment.yaml) -replace 'image: ghcr.io/vijay-dhame/fa1-frontend:latest', "image: ${{ env.IMAGE_PREFIX }}-frontend:${{ steps.vars.outputs.sha_short }}" | kubectl apply -f -
+          (Get-Content k8s/frontend-deployment.yaml) -replace 'image: ghcr.io/vijay-dhame/fa2-frontend:latest', "image: ${{ env.IMAGE_PREFIX }}-frontend:${{ steps.vars.outputs.sha_short }}" | kubectl apply -f -
         shell: pwsh
 
       - name: Apply Services

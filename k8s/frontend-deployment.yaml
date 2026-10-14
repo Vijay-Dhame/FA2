@@ -24,8 +24,8 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/vijay-dhame/fa1-frontend:latest
-          imagePullPolicy: Always
+          image: ghcr.io/vijay-dhame/fa2-frontend:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
               name: http

@@ -35,8 +35,8 @@ Write-Host "  ✓ Current context: $context" -ForegroundColor Green
 # --- Build Docker images ---
 Write-Host "`n[1/8] Building Docker images..." -ForegroundColor Yellow
 $sha = (git rev-parse --short HEAD)
-$backendImage = "ghcr.io/vijay-dhame/fa1-backend"
-$frontendImage = "ghcr.io/vijay-dhame/fa1-frontend"
+$backendImage = "ghcr.io/vijay-dhame/fa2-backend"
+$frontendImage = "ghcr.io/vijay-dhame/fa2-frontend"
 
 docker build -t "${backendImage}:${sha}" -t "${backendImage}:latest" "$projectRoot/backend"
 Write-Host "  ✓ Backend image built: ${backendImage}:${sha}" -ForegroundColor Green
