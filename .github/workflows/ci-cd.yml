@@ -13,7 +13,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_PREFIX: ghcr.io/${{ github.repository_owner }}/fa2
+  IMAGE_PREFIX: ghcr.io/vijay-dhame/fa2
 
 permissions:
   contents: read
