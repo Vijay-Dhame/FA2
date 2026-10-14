@@ -1,0 +1,49 @@
+# ---- Terraform ----
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfstate.*.backup
+.terraform.lock.hcl
+terraform.tfstate.d/
+
+# ---- Docker ----
+# (no runtime files to track)
+
+# ---- Python ----
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# ---- Node.js ----
+node_modules/
+dist/
+.vite/
+
+# ---- IDE ----
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+
+# ---- Secrets / environment ----
+.env
+.env.*
+!.env.example
+
+# ---- Logs ----
+*.log
+
+# ---- Pytest ----
+.pytest_cache/
+
+# ---- Kubernetes / Secrets ----
+kubeconfig
+*.key
+*.pem

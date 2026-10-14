@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: devops-fa2
+  labels:
+    project: devops-environment-manager
+    assignment: fa2

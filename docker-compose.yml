@@ -1,0 +1,37 @@
+# ---------------------------------------------------------------------------
+# docker-compose.yml — Local development convenience
+#
+# This is for quick local development only. The FA1 multi-environment
+# deployment (QA/UAT/PROD) must be provisioned through Terraform.
+# ---------------------------------------------------------------------------
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: devops-em-dev-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT_NAME=development
+      - SERVICE_NAME=backend
+    networks:
+      - dev-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: devops-em-dev-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - dev-network
+
+networks:
+  dev-network:
+    name: devops-em-dev-network
+    driver: bridge
